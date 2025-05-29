@@ -7,11 +7,14 @@ import {
 } from '../models/products.model';
 
 const getProducts = async (req: Request, res: Response) => {
-	const { page, size } = req.query;
+	const { page, size, description, price } = req.query;
+
 	try {
 		const products = await getallProducts(
 			Number(page || 1),
-			Number(size || 10)
+			Number(size || 10),
+			description as string,
+			price ? Number(price) : undefined
 		);
 		if (!products) {
 			return res.status(404).json({ message: 'No hay productos disponibles' });
